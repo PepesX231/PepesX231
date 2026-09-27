@@ -17,9 +17,12 @@ repos = u["repositories"]["nodes"]
 stars = sum(r["stargazerCount"] for r in repos)
 cc = u["contributionsCollection"]
 langs = {}
+def readable(c):                      # very dark language colours vanish on black — lift them to grey
+    r, g, b = (int(c[i:i+2], 16) for i in (1, 3, 5))
+    return c if .2126*r + .7152*g + .0722*b > 60 else "#8a8a90"
 for r in repos:
     for e in r["languages"]["edges"]:
-        n = e["node"]["name"]; langs.setdefault(n, [0, e["node"]["color"] or "#4da3ff"]); langs[n][0] += e["size"]
+        n = e["node"]["name"]; langs.setdefault(n, [0, readable(e["node"]["color"] or "#4da3ff")]); langs[n][0] += e["size"]
 top = sorted(langs.items(), key=lambda x: -x[1][0])[:6]
 tot = sum(v[0] for _, v in top) or 1
 
@@ -31,13 +34,13 @@ def card(w, h, title, body):
 .in{{animation:in .8s ease both}}@keyframes in{{from{{opacity:0;transform:translateY(6px)}}to{{opacity:1;transform:none}}}}</style>
 <rect width="{w}" height="{h}" rx="14" fill="#0b0b0c"/><rect x="24" y="24" width="10" height="10" fill="#4da3ff"/><text class="t" x="44" y="34">{title}</text>{body}</svg>"""
 
-items = [("CONTRIBUTIONS (1Y)", cc["contributionCalendar"]["totalContributions"]), ("COMMITS (1Y)", cc["totalCommitContributions"] + cc["restrictedContributionsCount"]),
+items = [("CONTRIBUTIONS", cc["contributionCalendar"]["totalContributions"]), ("COMMITS", cc["totalCommitContributions"] + cc["restrictedContributionsCount"]),
          ("PUBLIC REPOS", u["repositories"]["totalCount"]), ("STARS", stars), ("PULL REQUESTS", cc["totalPullRequestContributions"]), ("FOLLOWERS", u["followers"]["totalCount"])]
 body = ""
 for i, (lab, val) in enumerate(items):
     x, y = 24 + (i % 3) * 150, 78 + (i // 3) * 70
     body += f'<g class="in" style="animation-delay:{i*.08:.2f}s"><text class="v" x="{x}" y="{y}">{val:,}</text><text class="l" x="{x}" y="{y+20}">{lab}</text></g>'
-open("assets/stats.svg", "w").write(card(470, 200, "GitHub · PepesX231", body))
+open("assets/stats.svg", "w").write(card(470, 200, "GitHub · last 12 months", body))
 
 body, x = "", 24
 bar = ""
