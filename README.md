@@ -48,8 +48,8 @@
 ### 📊 Stats
 
 <p align="left">
-  <img height="165" src="https://github-readme-stats.vercel.app/api?username=PepesX231&show_icons=true&hide_border=true&bg_color=0b0b0c&title_color=4da3ff&icon_color=4da3ff&text_color=c9c9cd&count_private=true" alt="GitHub stats">
-  <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=PepesX231&layout=compact&hide_border=true&bg_color=0b0b0c&title_color=4da3ff&text_color=c9c9cd" alt="Top languages">
+  <img width="49%" src="assets/stats.svg" alt="GitHub stats">
+  <img width="49%" src="assets/langs.svg" alt="Top languages">
 </p>
 
 <p align="center"><sub>■ Fail fast. Learn fast. ■</sub></p>
